@@ -1,5 +1,9 @@
 package com.ozexpert.devicemeta;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
@@ -10,23 +14,46 @@ import org.json.JSONObject;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class CDVDeviceMeta extends CordovaPlugin {
+public class DeviceMeta extends CordovaPlugin {
+
+    private static Context ctx;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+
+        ctx = this.cordova.getActivity().getApplicationContext();
+
         if (action.equals("getDeviceMeta")) {
-            String message = args.getString(0);
-            this.getDeviceMeta(message, callbackContext);
-            return true;
+            
+            JSONObject r = new JSONObject();
+            r.put("debug", this.isDebug());
+
+            callbackContext.success(r);
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isDebug() {
+        try {
+            if ((ctx.getPackageManager().getPackageInfo(
+                ctx.getPackageName(), 0).applicationInfo.flags & 
+                ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+                //Debug and development mode
+                return true;
+            }
+        } catch (NameNotFoundException e){
+            // do nothing
         }
         return false;
     }
 
-    private void getDeviceMeta(String message, CallbackContext callbackContext) {
-        if (message != null && message.length() > 0) {
-            callbackContext.success(message);
-        } else {
-            callbackContext.error("Expected one non-empty string argument.");
-        }
-    }
+    // private void getDeviceMeta(String message, CallbackContext callbackContext) {
+    //     if (message != null && message.length() > 0) {
+    //         callbackContext.success(message);
+    //     } else {
+    //         callbackContext.error("Expected one non-empty string argument.");
+    //     }
+    // }
 }

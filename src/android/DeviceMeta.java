@@ -3,6 +3,10 @@ package com.ozexpert.devicemeta;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.wifi.WifiManager;
+import android.telephony.TelephonyManager;
+
+import java.util.Formatter;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -27,6 +31,8 @@ public class DeviceMeta extends CordovaPlugin {
             
             JSONObject r = new JSONObject();
             r.put("debug", this.isDebug());
+            //r.put("ip", this.getIpAddress());
+            r.put("networkProvider", this.getNetworkProvider());
 
             callbackContext.success(r);
         } else {
@@ -47,6 +53,16 @@ public class DeviceMeta extends CordovaPlugin {
             // do nothing
         }
         return false;
+    }
+
+    // private String getIpAddress() {
+    //     WifiManager wm = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
+    //     String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+    //     return ip;
+    // }
+    private String getNetworkProvider() {
+        TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.getNetworkOperatorName();
     }
 
     // private void getDeviceMeta(String message, CallbackContext callbackContext) {

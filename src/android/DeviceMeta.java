@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ozexpert.devicemeta.Utils;
+
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -31,8 +33,8 @@ public class DeviceMeta extends CordovaPlugin {
             
             JSONObject r = new JSONObject();
             r.put("debug", this.isDebug());
-            //r.put("ip", this.getIpAddress());
             r.put("networkProvider", this.getNetworkProvider());
+            r.put("ip", this.getIpAddress());
 
             callbackContext.success(r);
         } else {
@@ -55,11 +57,10 @@ public class DeviceMeta extends CordovaPlugin {
         return false;
     }
 
-    // private String getIpAddress() {
-    //     WifiManager wm = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
-    //     String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-    //     return ip;
-    // }
+    private String getIpAddress() {
+        return Utils.getIPAddress(true);
+    }
+
     private String getNetworkProvider() {
         TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getNetworkOperatorName();

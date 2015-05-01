@@ -1,5 +1,6 @@
 # cordova-plugin-device-meta
 Some device information for Cordova Apps (PhoneGap/Hybrid)
+Currently supports only Android, but iOS will come soon
 
 # Usage
 

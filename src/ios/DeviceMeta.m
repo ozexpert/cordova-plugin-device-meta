@@ -1,15 +1,15 @@
-/********* CDVDeviceMeta.m Cordova Plugin Implementation *******/
+/********* DeviceMeta.m Cordova Plugin Implementation *******/
 
 #import <Cordova/CDV.h>
 
-@interface CDVDeviceMeta : CDVPlugin {
+@interface DeviceMeta : CDVPlugin {
   // Member variables go here.
 }
 
 - (void)getDeviceMeta:(CDVInvokedUrlCommand*)command;
 @end
 
-@implementation CDVDeviceMeta
+@implementation DeviceMeta
 
 - (void)getDeviceMeta:(CDVInvokedUrlCommand*)command
 {

@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
+import android.os.Build;
 
 import java.util.Formatter;
 
@@ -35,6 +36,7 @@ public class DeviceMeta extends CordovaPlugin {
             r.put("debug", this.isDebug());
             r.put("networkProvider", this.getNetworkProvider());
             r.put("ip", this.getIpAddress());
+            r.put("manufacturer", this.getManufacturer());
 
             callbackContext.success(r);
         } else {
@@ -64,6 +66,10 @@ public class DeviceMeta extends CordovaPlugin {
     private String getNetworkProvider() {
         TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getNetworkOperatorName();
+    }
+
+    private String getManufacturer() {
+        return Build.MANUFACTURER;
     }
 
     // private void getDeviceMeta(String message, CallbackContext callbackContext) {

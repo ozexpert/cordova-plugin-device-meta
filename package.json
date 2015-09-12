@@ -1,0 +1,22 @@
+{
+	"name": "com.ozexpert.devicemeta",
+	"version": "0.0.2",
+	"description": "Cordova Device Meta Plugin",
+	"cordova": {
+		"id": "com.ozexpert.devicemeta",
+		"platforms": [
+			"android",
+			"ios"
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ozexpert/cordova-plugin-device-meta.git"
+	},
+	"keywords": [
+		"cordova",
+		"device-meta"
+	],
+	"author": "Young Park (youngkeunpark@gmail.com)",
+	"license": "Apache 2.0"
+}

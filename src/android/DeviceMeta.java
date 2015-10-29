@@ -34,8 +34,6 @@ public class DeviceMeta extends CordovaPlugin {
             
             JSONObject r = new JSONObject();
             r.put("debug", this.isDebug());
-            r.put("networkProvider", this.getNetworkProvider());
-            r.put("ip", this.getIpAddress());
             r.put("manufacturer", this.getManufacturer());
 
             callbackContext.success(r);
@@ -59,24 +57,7 @@ public class DeviceMeta extends CordovaPlugin {
         return false;
     }
 
-    private String getIpAddress() {
-        return Utils.getIPAddress(true);
-    }
-
-    private String getNetworkProvider() {
-        TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-        return tm.getNetworkOperatorName();
-    }
-
     private String getManufacturer() {
         return Build.MANUFACTURER;
     }
-
-    // private void getDeviceMeta(String message, CallbackContext callbackContext) {
-    //     if (message != null && message.length() > 0) {
-    //         callbackContext.success(message);
-    //     } else {
-    //         callbackContext.error("Expected one non-empty string argument.");
-    //     }
-    // }
 }

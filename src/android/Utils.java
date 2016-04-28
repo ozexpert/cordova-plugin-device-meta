@@ -2,8 +2,7 @@ package com.ozexpert.devicemeta;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;   
-import org.apache.http.conn.util.InetAddressUtils;
+import java.util.*;
 
 public class Utils {
 
@@ -34,7 +33,7 @@ public class Utils {
     /**
      * Load UTF8withBOM or any ansi text file.
      * @param filename
-     * @return  
+     * @return
      * @throws java.io.IOException
      */
     public static String loadFileAsString(String filename) throws java.io.IOException {
@@ -44,7 +43,7 @@ public class Utils {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(BUFLEN);
             byte[] bytes = new byte[BUFLEN];
             boolean isUTF8=false;
-            int read,count=0;           
+            int read,count=0;
             while((read=is.read(bytes)) != -1) {
                 if (count==0 && bytes[0]==(byte)0xEF && bytes[1]==(byte)0xBB && bytes[2]==(byte)0xBF ) {
                     isUTF8=true;
@@ -56,13 +55,13 @@ public class Utils {
             }
             return isUTF8 ? new String(baos.toByteArray(), "UTF-8") : new String(baos.toByteArray());
         } finally {
-            try{ is.close(); } catch(Exception ex){} 
+            try{ is.close(); } catch(Exception ex){}
         }
     }
 
     /**
      * Returns MAC address of the given interface name.
-     * @param interfaceName eth0, wlan0 or NULL=use first interface 
+     * @param interfaceName eth0, wlan0 or NULL=use first interface
      * @return  mac address or empty string
      */
     public static String getMACAddress(String interfaceName) {
@@ -76,7 +75,7 @@ public class Utils {
                 if (mac==null) return "";
                 StringBuilder buf = new StringBuilder();
                 for (int idx=0; idx<mac.length; idx++)
-                    buf.append(String.format("%02X:", mac[idx]));       
+                    buf.append(String.format("%02X:", mac[idx]));
                 if (buf.length()>0) buf.deleteCharAt(buf.length()-1);
                 return buf.toString();
             }
@@ -103,12 +102,11 @@ public class Utils {
                 for (InetAddress addr : addrs) {
                     if (!addr.isLoopbackAddress()) {
                         String sAddr = addr.getHostAddress().toUpperCase();
-                        boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr); 
-                        if (useIPv4) {
-                            if (isIPv4) 
+                        if(addr instanceof Inet4Address) {
+                            if (useIPv4)
                                 return sAddr;
                         } else {
-                            if (!isIPv4) {
+                            if (!useIPv4) {
                                 int delim = sAddr.indexOf('%'); // drop ip6 port suffix
                                 return delim<0 ? sAddr : sAddr.substring(0, delim);
                             }

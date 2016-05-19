@@ -9,7 +9,7 @@
 
 @implementation DeviceMeta
 
-- (CDVPluginResult *)getDeviceMeta:(CDVInvokedUrlCommand*)command
+- (void)getDeviceMeta:(CDVInvokedUrlCommand*)command
 {
     CDVPluginResult* pluginResult = nil;
     //NSString* echo = [command.arguments objectAtIndex:0];
@@ -29,17 +29,23 @@
 {
     NSMutableDictionary* devProps = [NSMutableDictionary dictionaryWithCapacity:4];
     [devProps setObject:@"Apple" forKey:@"manufacturer"];
-    #ifdef DEBUG
-        [devProps setObject:@"true" forKey:@"debug"];
-    #else
-        [devProps setObject:@"false" forKey:@"debug"];
-    #endif
+    [devProps setObject:@([self isDebug]) forKey:@"debug"];
     [devProps setObject:[self getIPAddress] forKey:@"ip"];
     [devProps setObject:[self getNetworkProvider] forKey:@"networkProvider"];
 
     NSDictionary* devReturn = [NSDictionary dictionaryWithDictionary:devProps];
     return devReturn;
 }
+
+- (BOOL)isDebug
+{
+#ifdef DEBUG
+    return true;
+#else
+    return false;
+#endif
+}
+
 
 - (NSString *)getIPAddress {
 

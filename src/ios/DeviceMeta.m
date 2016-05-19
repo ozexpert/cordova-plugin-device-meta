@@ -9,7 +9,7 @@
 
 @implementation DeviceMeta
 
-- (CDVPluginResult *)getDeviceMeta:(CDVInvokedUrlCommand*)command
+- (void)getDeviceMeta:(CDVInvokedUrlCommand*)command
 {
     CDVPluginResult* pluginResult = nil;
     //NSString* echo = [command.arguments objectAtIndex:0];

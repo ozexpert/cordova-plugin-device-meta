@@ -80,6 +80,9 @@
 - (NSString *)getNetworkProvider {
     CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
     CTCarrier *carrier = [netinfo subscriberCellularProvider];
+    if ([carrier carrierName] == NULL) {
+        return @"";
+    }
     return @"%@M", [carrier carrierName];
 }
 
